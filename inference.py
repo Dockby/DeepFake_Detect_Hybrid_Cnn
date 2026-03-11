@@ -1,15 +1,4 @@
-"""
-inference.py
 
-Predict REAL or FAKE for a single image or video file.
-
-Usage:
-    python inference.py --input sample_inputs/test_real.jpg
-    python inference.py --input sample_inputs/test_fake.jpg
-    python inference.py --input path/to/any_video.mp4
-
-Output: prints label + confidence, saves optional heatmap.
-"""
 
 import os
 import cv2
