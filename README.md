@@ -37,9 +37,6 @@ preprocess.py         — frame extraction, MTCNN face detection, train/val/test
 train.py              — training
 evaluate.py           — metrics + confusion matrix + ROC + grad-cam
 inference.py          — run on a single image or video
-create_sample_inputs.py  — makes test images if you don't have the dataset
-demo.py               — quick demo without needing to train anything
-kaggle_notebook.py    — everything in one file for running on Kaggle
 requirements.txt
 ```
 
@@ -51,13 +48,6 @@ requirements.txt
 pip install -r requirements.txt
 ```
 
-Quick demo (no dataset or trained model needed):
-```bash
-python create_sample_inputs.py
-python demo.py
-```
-
----
 
 ## Dataset
 
@@ -103,11 +93,7 @@ python inference.py --input yourfile.jpg --heatmap
 - Early stopping with patience=5  
 - In practice it converged around epoch 14-18
 
-## Running on Kaggle
 
-Use `kaggle_notebook.py` — add the DFD dataset to your notebook from Settings → Add Data, then run the cells in order.
-
----
 
 ## Contact
 
