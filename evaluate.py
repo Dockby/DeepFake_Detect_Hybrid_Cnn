@@ -32,9 +32,8 @@ RESULTS_DIR = 'results'
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
 
-# ──────────────────────────────────────────────────────────────
 #  Main evaluation
-# ──────────────────────────────────────────────────────────────
+
 
 def evaluate(model_path: str, data_dir: str, batch_size: int = 32):
     """Run inference on held-out test set and report all metrics."""
@@ -46,13 +45,13 @@ def evaluate(model_path: str, data_dir: str, batch_size: int = 32):
     print(f'Test samples : {test_gen.samples}')
     print(f'Class map    : {test_gen.class_indices}')   # {fake:0, real:1} or similar
 
-    # ── Predict ───────────────────────────────────────────────
+    #  Predict
     print('Running predictions...')
     y_prob = model.predict(test_gen, verbose=1).ravel()
     y_pred = (y_prob >= 0.5).astype(int)
     y_true = test_gen.classes
 
-    # ── Metrics ───────────────────────────────────────────────
+    # Metrics 
     auc  = roc_auc_score(y_true, y_prob)
     acc  = float(np.mean(y_pred == y_true))
     prec = precision_score(y_true, y_pred)
@@ -85,7 +84,7 @@ def evaluate(model_path: str, data_dir: str, batch_size: int = 32):
         f.write(summary)
     print(f'Metrics saved → {metrics_path}')
 
-    # ── Confusion Matrix ──────────────────────────────────────
+    # Confusion Matrix
     cm = confusion_matrix(y_true, y_pred)
     plt.figure(figsize=(6, 5))
     sns.heatmap(
@@ -103,7 +102,7 @@ def evaluate(model_path: str, data_dir: str, batch_size: int = 32):
     plt.close()
     print(f'Confusion matrix → {cm_path}')
 
-    # ── ROC Curve ─────────────────────────────────────────────
+    # ROC Curve
     fpr, tpr, _ = roc_curve(y_true, y_prob)
     plt.figure(figsize=(6, 5))
     plt.plot(fpr, tpr, lw=2, color='steelblue',
@@ -125,9 +124,9 @@ def evaluate(model_path: str, data_dir: str, batch_size: int = 32):
             'recall': rec, 'f1': f1, 'auc': auc}
 
 
-# ──────────────────────────────────────────────────────────────
+ 
 #  Training curves
-# ──────────────────────────────────────────────────────────────
+
 
 def plot_training_curves(log_csv: str = 'logs/training_log.csv'):
     """Plot accuracy & loss from training CSV log."""
@@ -164,9 +163,9 @@ def plot_training_curves(log_csv: str = 'logs/training_log.csv'):
     print(f'Training curves → {curve_path}')
 
 
-# ──────────────────────────────────────────────────────────────
+# 
 #  Grad-CAM attention heatmap
-# ──────────────────────────────────────────────────────────────
+# 
 
 def generate_gradcam(model_path: str, image_path: str, out_path: str = None):
     """
