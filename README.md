@@ -1,7 +1,7 @@
 # DeepFake Detection — CNN + Attention
 
 Implementation for our paper **"DeepFake Detection Using Hybrid CNN Attention Model"** submitted to IEEE.  
-Authors: Chetan Singh, Hardik Garg | Guide: Dr. Swati Sharma | Galgotias University
+Authors: Chetan Singh, Hardik Garg    Guide: Dr. Swati Sharma , Galgotias University
 
 ---
 
