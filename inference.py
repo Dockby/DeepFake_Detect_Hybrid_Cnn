@@ -1,6 +1,6 @@
 """
 inference.py
-============
+
 Predict REAL or FAKE for a single image or video file.
 
 Usage:
@@ -25,9 +25,8 @@ RESULTS_DIR = 'results'
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
 
-# ──────────────────────────────────────────────────────────────
 #  Helpers
-# ──────────────────────────────────────────────────────────────
+
 
 def preprocess_face(face_bgr: np.ndarray) -> np.ndarray:
     """Resize and normalise a face crop for the model."""
@@ -60,9 +59,9 @@ def detect_face(image_bgr: np.ndarray, detector: MTCNN):
     return image_bgr[y1:y2, x1:x2]
 
 
-# ──────────────────────────────────────────────────────────────
+
 #  Single image
-# ──────────────────────────────────────────────────────────────
+
 
 def predict_image(model, detector, image_path: str,
                   save_heatmap: bool = False) -> dict:
@@ -94,9 +93,9 @@ def predict_image(model, detector, image_path: str,
     return result
 
 
-# ──────────────────────────────────────────────────────────────
+
 #  Video  (frame-by-frame, majority vote)
-# ──────────────────────────────────────────────────────────────
+
 
 def predict_video(model, detector, video_path: str,
                   fps: int = 5) -> dict:
@@ -138,9 +137,9 @@ def predict_video(model, detector, video_path: str,
     }
 
 
-# ──────────────────────────────────────────────────────────────
+
 #  Optional Grad-CAM heatmap
-# ──────────────────────────────────────────────────────────────
+
 
 def _save_heatmap(model, inp: np.ndarray,
                   face_bgr: np.ndarray, source_path: str):
@@ -174,9 +173,9 @@ def _save_heatmap(model, inp: np.ndarray,
         print(f'[WARN] Could not generate heatmap: {e}')
 
 
-# ──────────────────────────────────────────────────────────────
+
 #  CLI
-# ──────────────────────────────────────────────────────────────
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -209,7 +208,7 @@ def main():
         result = predict_image(model, detector, args.input,
                                save_heatmap=args.heatmap)
 
-    # ── Print result ─────────────────────────────────────────
+    #  Print result
     print('\n' + '='*45)
     if 'error' in result:
         print(f'  ERROR : {result["error"]}')
