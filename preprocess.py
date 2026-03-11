@@ -1,26 +1,4 @@
-"""
-preprocess.py
-=============
-1. Extracts frames from DFD videos at 10 fps
-2. Detects & crops faces with MTCNN (confidence ≥ 0.95)
-3. Splits at VIDEO level  →  no data leakage across partitions
-4. Saves face crops in ImageFolder layout for Keras generators
 
-Expected raw layout (after downloading from Kaggle):
-    data/raw/
-        real/   *.mp4 (original real videos)
-        fake/   *.mp4 (deepfake videos)
-
-Output layout:
-    data/processed/
-        train/real/  train/fake/
-        val/real/    val/fake/
-        test/real/   test/fake/
-
-DFD Dataset (Kaggle):
-    https://www.kaggle.com/datasets/soroush365/
-        deep-fake-detection-dfd-entire-original-dataset
-"""
 
 import os
 import cv2
@@ -32,7 +10,7 @@ from pathlib import Path
 from mtcnn import MTCNN
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
-# ── Hyper-params (match paper) ────────────────────────────────
+# Hyper-params (match paper)
 IMG_SIZE     = 224
 FPS_EXTRACT  = 10       # frames per second to extract
 MTCNN_THRESH = 0.95     # discard faces below this confidence
@@ -44,9 +22,9 @@ random.seed(RANDOM_SEED)
 np.random.seed(RANDOM_SEED)
 
 
-# ──────────────────────────────────────────────────────────────
+
 #  Step 1: Extract frames from video
-# ──────────────────────────────────────────────────────────────
+
 
 def extract_frames(video_path: str, tmp_dir: str, fps: int = FPS_EXTRACT) -> int:
     """
@@ -71,9 +49,9 @@ def extract_frames(video_path: str, tmp_dir: str, fps: int = FPS_EXTRACT) -> int
     return saved
 
 
-# ──────────────────────────────────────────────────────────────
+
 #  Step 2: Detect & crop face
-# ──────────────────────────────────────────────────────────────
+
 
 def crop_face(image_path: str, detector: MTCNN, out_path: str) -> bool:
     """
@@ -105,9 +83,9 @@ def crop_face(image_path: str, detector: MTCNN, out_path: str) -> bool:
     return True
 
 
-# ──────────────────────────────────────────────────────────────
+
 #  Main pipeline
-# ──────────────────────────────────────────────────────────────
+
 
 def run_preprocessing(raw_dir: str, out_dir: str):
     """
@@ -169,9 +147,8 @@ def run_preprocessing(raw_dir: str, out_dir: str):
     print('✅  Preprocessing complete.')
 
 
-# ──────────────────────────────────────────────────────────────
 #  Data generators for training
-# ──────────────────────────────────────────────────────────────
+
 
 def get_generators(processed_dir: str, batch_size: int = 32):
     """
