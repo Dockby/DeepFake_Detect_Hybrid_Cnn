@@ -61,7 +61,7 @@ python demo.py
 
 ## Dataset
 
-We used the [DFD dataset on Kaggle](https://www.kaggle.com/datasets/soroush365/deep-fake-detection-dfd-entire-original-dataset). Download it and put the videos like this:
+We used the [DFD dataset on Kaggle](https://www.kaggle.com/datasets/sanikatiwarekar/deep-fake-detection-dfd-entire-original)-dataset/data. Download it and put the videos like this:
 
 ```
 data/raw/
