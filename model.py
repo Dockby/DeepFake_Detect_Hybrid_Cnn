@@ -1,22 +1,13 @@
-"""
-model.py
-========
-Hybrid CNN-Attention DeepFake Detector
-Architecture: Xception backbone + Spatial & Channel Attention
 
-Paper: DeepFake Detection Using Hybrid CNN Attention Model
-Authors: Chetan Singh, Hardik Garg
-Guide:   Dr. Swati Sharma  |  Galgotias University
-"""
 
 import tensorflow as tf
 from tensorflow.keras import layers, Model
 from tensorflow.keras.applications import Xception
 
 
-# ──────────────────────────────────────────────────────────────
+
 #  Attention Modules
-# ──────────────────────────────────────────────────────────────
+
 
 def channel_attention_block(x, ratio: int = 8):
     """
@@ -64,9 +55,9 @@ def spatial_attention_block(x, kernel_size: int = 7):
     return layers.Multiply()([x, scale])
 
 
-# ──────────────────────────────────────────────────────────────
+
 #  Full Model
-# ──────────────────────────────────────────────────────────────
+
 
 def build_model(input_shape=(224, 224, 3), freeze_backbone: bool = False):
     """
@@ -87,7 +78,7 @@ def build_model(input_shape=(224, 224, 3), freeze_backbone: bool = False):
         freeze_backbone:  if True, Xception weights are frozen
                           (useful for fast demo / transfer-only mode)
     """
-    # ── Xception backbone ─────────────────────────────────────
+    # Xception backbone 
     backbone = Xception(
         include_top=False,
         weights='imagenet',
@@ -98,11 +89,11 @@ def build_model(input_shape=(224, 224, 3), freeze_backbone: bool = False):
     inputs = backbone.input                   # 224×224×3
     x      = backbone.output                  # 7×7×2048
 
-    # ── Dual Attention ────────────────────────────────────────
+    # Dual Attention 
     x = channel_attention_block(x, ratio=8)
     x = spatial_attention_block(x, kernel_size=7)
 
-    # ── Classifier head ───────────────────────────────────────
+    # Classifier head 
     x = layers.GlobalAveragePooling2D()(x)    # 2048
     x = layers.Dense(512, activation='relu')(x)
     x = layers.Dropout(0.5)(x)
