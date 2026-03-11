@@ -1,18 +1,4 @@
-"""
-evaluate.py
-===========
-Full evaluation on the DFD test set.
 
-Generates:
-  results/metrics.txt
-  results/confusion_matrix.png
-  results/roc_curve.png
-  results/training_curves.png
-
-Usage:
-    python evaluate.py
-    python evaluate.py --model saved_models/best_model.h5 --data data/processed
-"""
 
 import os
 import argparse
